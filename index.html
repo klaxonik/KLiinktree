@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>klaxonik's Linktree</title>
+  <title>klaxonik's Links</title>
 
-  <!-- Font Awesome for icons (free CDN) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
     :root {
-      --bg-color: #121212;
-      --container-bg: #1e1e1e;
+      --bg-dark: #121212;
+      --container-dark: #1e1e1e;
+      --text-dark: #f1f1f1;
+      --link-dark: #333;
+
+      --bg-light: #f2f2f2;
+      --container-light: #ffffff;
+      --text-light: #121212;
+      --link-light: #ddd;
+
       --accent: #00bcd4;
-      --text-color: #f1f1f1;
-      --link-bg: #333;
-      --hover-bg: #ffffff;
-      --hover-text: #121212;
     }
 
     * {
@@ -25,24 +28,49 @@
 
     body {
       margin: 0;
-      background-color: var(--bg-color);
-      color: var(--text-color);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       padding: 20px;
+      transition: background 0.3s, color 0.3s;
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+      position: relative;
+      z-index: 1;
+    }
+
+    body.light {
+      background-color: var(--bg-light);
+      color: var(--text-light);
+    }
+
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
     }
 
     .container {
+      position: relative;
+      z-index: 2;
       width: 100%;
       max-width: 480px;
-      background-color: var(--container-bg);
+      background-color: var(--container-dark);
       padding: 30px 20px;
       border-radius: 20px;
       box-shadow: 0 0 20px rgba(0,0,0,0.5);
       text-align: center;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    body.light .container {
+      background-color: var(--container-light);
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
     }
 
     .profile-img {
@@ -64,13 +92,17 @@
       align-items: center;
       justify-content: center;
       text-decoration: none;
-      color: var(--text-color);
-      background: var(--link-bg);
+      color: inherit;
+      background: var(--link-dark);
       padding: 16px;
       margin: 10px 0;
       border-radius: 12px;
       font-size: 1.1rem;
-      transition: background 0.3s, color 0.3s, transform 0.2s;
+      transition: all 0.3s ease;
+    }
+
+    body.light .links a {
+      background: var(--link-light);
     }
 
     .links a i {
@@ -79,19 +111,42 @@
     }
 
     .links a:hover {
-      background: var(--hover-bg);
-      color: var(--hover-text);
-      transform: translateY(-2px);
+      background: white;
+      color: #121212;
+      transform: translateY(-4px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     }
 
-    .links a:hover i {
-      color: var(--hover-text);
+    .toggle-mode {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.3s, color 0.3s;
+      z-index: 3;
+    }
+
+    .toggle-mode:hover {
+      background: var(--accent);
+      color: #fff;
     }
 
     footer {
       margin-top: 25px;
       font-size: 0.85rem;
       color: #aaa;
+    }
+
+    .counter {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #888;
     }
 
     @media (max-width: 480px) {
@@ -107,9 +162,24 @@
         font-size: 1rem;
       }
     }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
+
+  <div id="particles-js"></div>
+
+  <button class="toggle-mode" onclick="toggleMode()">Toggle Mode</button>
 
   <div class="container">
     <img class="profile-img" src="https://yt3.ggpht.com/_BQFREGtP1PR5YC504ynygSkPVfahTVTcUvOuLIx5LnBZXPpzW3u0H2jqZd87w9P8id8XI0von4=s88-c-k-c0x00ffffff-no-rj" alt="Profile Picture" />
@@ -119,21 +189,57 @@
       <a href="https://www.tiktok.com/@hajs_dajmi" target="_blank">
         <i class="fab fa-tiktok"></i> TikTok
       </a>
-      <a href="http://www.youtube.com/channel/UCt-lGfeB2ls9Dmg5jOQfA3w" target="_blank">
+      <a href="https://www.youtube.com/@klaxonik" target="_blank">
         <i class="fab fa-youtube"></i> YouTube
       </a>
-      <a href="https://open.spotify.com/user/31jalhlxsccgnc25tvuakkoxjhn4?si=d8bf46dd73aa4e42" target="_blank">
+      <a href="https://open.spotify.com/user/klaxonik" target="_blank">
         <i class="fab fa-spotify"></i> Spotify
       </a>
-      <a href="https://discord.gg/" target="_blank">
+      <a href="https://discord.gg/yourinvitecode" target="_blank">
         <i class="fab fa-discord"></i> Discord
       </a>
     </div>
+
+    <div class="counter" id="visit-count">Loading visits...</div>
 
     <footer>
       &copy; 2025 klaxonik. All rights reserved.
     </footer>
   </div>
 
-</body>
-</html>
+  <script>
+    function toggleMode() {
+      document.body.classList.toggle('light');
+    }
+
+    // CountAPI: Free visitor counter
+    fetch('https://api.countapi.xyz/hit/klaxonik.github.io/KLiinktree')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('visit-count').innerText = `Visitors: ${data.value}`;
+      });
+
+    // Load particles.js
+    window.onload = function() {
+      const script = document.createElement('script');
+      script.src = './particles.min.js';
+      script.onload = function() {
+        particlesJS("particles-js", {
+          "particles": {
+            "number": {
+              "value": 60,
+              "density": { "enable": true, "value_area": 800 }
+            },
+            "color": { "value": "#00bcd4" },
+            "shape": {
+              "type": "circle",
+              "stroke": { "width": 0, "color": "#000000" }
+            },
+            "opacity": {
+              "value": 0.5,
+              "random": true
+            },
+            "size": {
+              "value": 3,
+              "random": true
+            },

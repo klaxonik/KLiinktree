@@ -98,10 +98,18 @@
     }
 
     .links a:hover {
-      background: white;
-      color: #121212;
       transform: translateY(-4px);
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    body:not(.light) .links a:hover {
+      background: white;
+      color: #121212;
+    }
+
+    body.light .links a:hover {
+      background: #000;
+      color: white;
     }
 
     .toggle-mode {
@@ -128,12 +136,6 @@
       margin-top: 25px;
       font-size: 0.85rem;
       color: #aaa;
-    }
-
-    .counter {
-      margin-top: 10px;
-      font-size: 0.9rem;
-      color: #888;
     }
 
     @media (max-width: 480px) {
@@ -185,27 +187,23 @@
       </a>
     </div>
 
-    <div class="counter" id="visit-count">Loading visits...</div>
-
     <footer>
       &copy; 2025 klaxonik. All rights reserved.
     </footer>
   </div>
 
   <script>
-    function toggleMode() {
-      document.body.classList.toggle('light');
+    // Check saved mode on load
+    const savedMode = localStorage.getItem("mode");
+    if (savedMode === "light") {
+      document.body.classList.add("light");
     }
 
-    // Fix: Use update endpoint to ensure counter increments
-    fetch('https://api.countapi.xyz/update/klaxonik.github.io/KLiinktree/?amount=1')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('visit-count').innerText = `Visitors: ${data.value}`;
-      })
-      .catch(() => {
-        document.getElementById('visit-count').innerText = `Visitors: error`;
-      });
+    function toggleMode() {
+      document.body.classList.toggle("light");
+      const isLight = document.body.classList.contains("light");
+      localStorage.setItem("mode", isLight ? "light" : "dark");
+    }
   </script>
 
 </body>
